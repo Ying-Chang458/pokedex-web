@@ -1,0 +1,150 @@
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex Pro | Explora tus Pokémon favoritos</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header class="encabezado">
+        <div class="barra-superior">
+            <a href="#inicio" class="marca">
+                <span class="mini-pokebola" aria-hidden="true"></span>
+                Pokédex Pro
+            </a>
+            <nav>
+                <a href="#explorar">Explorar</a>
+                <a href="#juego">Mini juego</a>
+            </nav>
+        </div>
+
+        <div class="portada" id="inicio">
+            <div class="portada-texto">
+                <span class="etiqueta">★ ¡Bienvenido, entrenador!</span>
+                <h1>POKÉDEX <span>PRO</span></h1>
+                <p class="subtitulo">Explora tus Pokémon favoritos</p>
+                <p class="descripcion">Busca, descubre y conoce a tus Pokémon. ¡Hay un mundo entero por explorar!</p>
+                <a href="#explorar" class="boton-principal">Explorar Pokémon <span>↓</span></a>
+            </div>
+            <div class="decoracion" aria-hidden="true">
+                <div class="brillo"></div>
+                <div class="pokebola-grande">
+                    <div class="circulo-pokebola"></div>
+                </div>
+                <span class="estrella estrella-uno">✦</span>
+                <span class="estrella estrella-dos">✧</span>
+                <span class="estrella estrella-tres">✦</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Buscador, filtros y tarjetas -->
+        <section class="seccion explorar" id="explorar">
+            <div class="titulo-seccion">
+                <div>
+                    <span class="sobre-titulo">TU AVENTURA EMPIEZA AQUÍ</span>
+                    <h2>Explorar Pokémon <span class="punto-rojo">●</span></h2>
+                    <p>Encuentra a tus favoritos y descubre sus características.</p>
+                </div>
+                <div class="contador" id="contador">0 Pokémon cargados</div>
+            </div>
+
+            <div class="panel-busqueda">
+                <label for="buscador">Buscar Pokémon</label>
+                <div class="campo-busqueda">
+                    <span aria-hidden="true">⌕</span>
+                    <input type="search" id="buscador" placeholder="Escribe un nombre, por ejemplo: pikachu" oninput="mostrarPokemones()" autocomplete="off">
+                </div>
+
+                <p class="texto-filtros">Filtrar por tipo <small>(desliza para ver todos →)</small></p>
+                <div class="lista-filtros" aria-label="Filtros por tipo de Pokémon">
+                    <button class="filtro activo" onclick="filtrarTipo('all', this)">Todos</button>
+                    <button class="filtro" onclick="filtrarTipo('fire', this)">🔥 Fuego</button>
+                    <button class="filtro" onclick="filtrarTipo('water', this)">💧 Agua</button>
+                    <button class="filtro" onclick="filtrarTipo('grass', this)">🌿 Planta</button>
+                    <button class="filtro" onclick="filtrarTipo('electric', this)">⚡ Eléctrico</button>
+                    <button class="filtro" onclick="filtrarTipo('normal', this)">Normal</button>
+                    <button class="filtro" onclick="filtrarTipo('ice', this)">❄️ Hielo</button>
+                    <button class="filtro" onclick="filtrarTipo('fighting', this)">Lucha</button>
+                    <button class="filtro" onclick="filtrarTipo('poison', this)">Veneno</button>
+                    <button class="filtro" onclick="filtrarTipo('ground', this)">Tierra</button>
+                    <button class="filtro" onclick="filtrarTipo('flying', this)">Volador</button>
+                    <button class="filtro" onclick="filtrarTipo('psychic', this)">Psíquico</button>
+                    <button class="filtro" onclick="filtrarTipo('bug', this)">Bicho</button>
+                    <button class="filtro" onclick="filtrarTipo('rock', this)">Roca</button>
+                    <button class="filtro" onclick="filtrarTipo('ghost', this)">Fantasma</button>
+                    <button class="filtro" onclick="filtrarTipo('dragon', this)">Dragón</button>
+                    <button class="filtro" onclick="filtrarTipo('dark', this)">Siniestro</button>
+                    <button class="filtro" onclick="filtrarTipo('steel', this)">Acero</button>
+                    <button class="filtro" onclick="filtrarTipo('fairy', this)">Hada</button>
+                </div>
+                <p class="aviso-busqueda">El buscador y los filtros revisan los Pokémon que ya has cargado.</p>
+            </div>
+
+            <div class="resultado-cabecera">
+                <h3>Tu Pokédex</h3>
+                <span id="resultadoTexto">Preparando tu aventura...</span>
+            </div>
+
+            <div id="cargando" class="estado-cargando" role="status">
+                <div class="pokebola-cargando" aria-hidden="true"></div>
+                <p>Cargando Pokémon...</p>
+            </div>
+            <p id="mensajeEstado" class="mensaje-estado oculto" role="status"></p>
+
+            <!-- Se conserva el contenedor del código del profesor -->
+            <div id="contenido"></div>
+
+            <div class="zona-boton">
+                <button id="botonCargar" class="boton-cargar" onclick="obtenerPokemones()" disabled>Cargar 20 Pokémon más ↓</button>
+            </div>
+        </section>
+
+        <!-- Minijuego -->
+        <section class="seccion seccion-juego" id="juego">
+            <div class="titulo-seccion">
+                <div>
+                    <span class="sobre-titulo">UN RETO PARA ENTRENADORES</span>
+                    <h2>¿Quién es ese Pokémon? <span>🎮</span></h2>
+                    <p>Observa la silueta y trata de adivinar su nombre.</p>
+                </div>
+            </div>
+            <div class="juego-panel">
+                <div class="juego-imagen">
+                    <span class="signo-pregunta" aria-hidden="true">?</span>
+                    <img id="imagenJuego" class="silueta" src="" alt="Silueta misteriosa" hidden>
+                </div>
+                <div class="juego-controles">
+                    <span class="etiqueta-juego">DESAFÍO POKÉMON</span>
+                    <h3>¡Adivina el Pokémon!</h3>
+                    <p>Es uno de los Pokémon que ya aparecen en tu Pokédex.</p>
+                    <form id="formularioJuego" onsubmit="adivinarPokemon(event)">
+                        <label for="respuestaJuego">¿Cómo se llama?</label>
+                        <input id="respuestaJuego" type="text" placeholder="Escribe tu respuesta" autocomplete="off" required>
+                        <button id="botonAdivinar" class="boton-principal" type="submit">¡Adivinar!</button>
+                    </form>
+                    <p id="mensajeJuego" class="mensaje-juego" role="status">Cargando desafío...</p>
+                    <button class="boton-otro" onclick="nuevoJuego()" type="button">↻ Otro Pokémon</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Ventana que aparece al seleccionar un Pokémon -->
+    <dialog id="ventanaDetalles" class="modal">
+        <button class="cerrar-modal" onclick="cerrarDetalles()" aria-label="Cerrar detalles">✕</button>
+        <div id="detalleContenido"></div>
+    </dialog>
+
+    <button id="volverArriba" onclick="volverArriba()" aria-label="Volver arriba" title="Volver arriba">↑</button>
+
+    <footer>
+        <span class="mini-pokebola" aria-hidden="true"></span>
+        <p><strong>Pokédex Pro</strong> · Hecho con HTML, CSS y JavaScript · Datos de PokéAPI</p>
+    </footer>
+</body>
+</html>
